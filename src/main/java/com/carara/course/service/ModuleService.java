@@ -2,7 +2,17 @@ package com.carara.course.service;
 
 import com.carara.course.model.ModuleModel;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 public interface ModuleService {
 
     void delete(ModuleModel moduleModel);
+
+    ModuleModel save(ModuleModel moduleModel);
+
+    Optional<ModuleModel> findModuleIntoCourse(UUID moduleId, UUID courseId);
+
+    List<ModuleModel> findByCourseId(UUID courseId);
 }
