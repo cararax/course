@@ -3,15 +3,19 @@ package com.carara.course.controller;
 import com.carara.course.dto.CourseDTO;
 import com.carara.course.model.CourseModel;
 import com.carara.course.service.CourseService;
+import com.carara.course.specification.SpecificationTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,8 +30,10 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<CourseModel>> getAllCourses() {
-        return ResponseEntity.status(OK).body(courseService.findAll());
+    public ResponseEntity<Page<CourseModel>> getAllCourses(SpecificationTemplate.CourseSpec spec,
+                                                           @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC)
+                                                           Pageable pageable) {
+        return ResponseEntity.status(OK).body(courseService.findAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")

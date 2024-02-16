@@ -1,8 +1,10 @@
 package com.carara.course.service;
 
 import com.carara.course.model.CourseModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,5 +18,5 @@ public interface CourseService {
 
     CourseModel update(CourseModel courseModel);
 
-    List<CourseModel> findAll();
+    Page<CourseModel> findAll(Specification<CourseModel> spec, Pageable pageable);
 }
