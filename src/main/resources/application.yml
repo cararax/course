@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: Course
+  sql:
+    init:
+      mode: always
 
   datasource:
     url: jdbc:postgresql://localhost:5434/course-db
@@ -17,3 +20,4 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
+    defer-datasource-initialization: true
