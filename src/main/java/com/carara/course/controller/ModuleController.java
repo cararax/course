@@ -29,9 +29,9 @@ public class ModuleController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/{courseId}/modules")
-    public ResponseEntity<List<ModuleModel>> getAllModules(@PathVariable(value = "courseId") UUID courseId) {
-        return ResponseEntity.status(OK).body(moduleService.findByCourseId(courseId));
+    @GetMapping("/{moduleId}/modules")
+    public ResponseEntity<List<ModuleModel>> getAllModules(@PathVariable(value = "moduleId") UUID moduleId) {
+        return ResponseEntity.status(OK).body(moduleService.findByCourseId(moduleId));
     }
 
     @GetMapping("/{courseId}/modules/{moduleId}")
