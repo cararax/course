@@ -5,15 +5,19 @@ import com.carara.course.model.CourseModel;
 import com.carara.course.model.ModuleModel;
 import com.carara.course.service.CourseService;
 import com.carara.course.service.ModuleService;
+import com.carara.course.specification.SpecificationTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,10 +33,20 @@ public class ModuleController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/{moduleId}/modules")
-    public ResponseEntity<List<ModuleModel>> getAllModules(@PathVariable(value = "moduleId") UUID moduleId) {
-        return ResponseEntity.status(OK).body(moduleService.findByCourseId(moduleId));
+    @GetMapping("/{courseId}/modules")
+    public ResponseEntity<Page<ModuleModel>> getAllModules(@PathVariable(value = "courseId") UUID courseId,
+                                                           SpecificationTemplate.ModuleSpec spec,
+                                                           @PageableDefault(page = 0, size = 10, sort = "moduleId", direction = Sort.Direction.ASC)
+                                                           Pageable pageable) {
+        return ResponseEntity.status(OK).body(moduleService.findByCourseId(SpecificationTemplate.moduleByCourseId(courseId).and(spec), pageable));
     }
+
+    @GetMapping("/asd")
+    public ResponseEntity<String> getAllModules() {
+        return ResponseEntity.status(OK).body("bbbb");
+    }
+
+
 
     @GetMapping("/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId,

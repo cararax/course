@@ -1,6 +1,9 @@
 package com.carara.course.service;
 
 import com.carara.course.model.ModuleModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +20,6 @@ public interface ModuleService {
     List<ModuleModel> findByCourseId(UUID courseId);
 
     Optional<ModuleModel> findById(UUID moduleId);
+
+    Page<ModuleModel> findByCourseId(Specification<ModuleModel> spec, Pageable pageable);
 }
